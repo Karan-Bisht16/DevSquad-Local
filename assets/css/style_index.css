@@ -1,0 +1,43 @@
+.carousel-item {
+    width: 100%;
+    height: calc(50vw * 0.75);
+    object-fit: cover;
+}
+.carousel-item > img {
+    position: absolute;
+    top: -40%;
+}
+.content {
+    width: 90%;
+    margin: 0px auto 50px auto;
+    text-align: justify;
+}
+.title-card {
+    opacity: 0;
+    color: whitesmoke;
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin: 25px 0;
+    background-color: rgba(222, 29, 29, 0.921);
+    border: 2px solid #da291c;
+    transition: opacity 0.5s ease-in-out;
+}
+.title-card > p {
+    font-size: 18px;
+}
+.fade-in {
+    opacity: 1 !important;
+}
+@media (max-width: 600px) {
+    .carousel-item {
+        height: 50vw;
+    }
+    .carousel-item > img {
+        top: -20%;
+    }
+    .title-card {
+        margin: 10px 0px;
+        padding: 10px 10px;
+        border-radius: 8px;
+    }
+}
