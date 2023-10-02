@@ -29,12 +29,6 @@
     opacity: 1 !important;
 }
 @media (max-width: 600px) {
-    .carousel-item {
-        height: 50vw;
-    }
-    .carousel-item > img {
-        top: -20%;
-    }
     .title-card {
         margin: 10px 0px;
         padding: 10px 10px;

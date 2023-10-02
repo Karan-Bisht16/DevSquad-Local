@@ -1,24 +1,30 @@
 <%- include('./partials/header.ejs') %>
 
 <link rel="stylesheet" href="./css/style_home.css">
-
-<div class="main">  
-    <div class="display">
-        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active" data-bs-interval="3500">
-                    <img src="./images/img-slideshow-1.jpg" class="d-block w-100" alt="1st">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+   
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <div class="main">  
+        <div class="display">
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="3500">
+                        <img src="./images/img-slideshow-1.jpg" class="d-block w-100" alt="1st">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3500">
+                        <img src="./images/img-slideshow-2.jpeg" class="d-block w-100" alt="2nd">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3500">
+                        <img src="./images/img-slideshow-3.jpg" class="d-block w-100" alt="3rd">
+                    </div>
                 </div>
-                <div class="carousel-item" data-bs-interval="3500">
-                    <img src="./images/img-slideshow-2.jpeg" class="d-block w-100" alt="2nd">
-                </div>
-                <div class="carousel-item" data-bs-interval="3500">
-                    <img src="./images/img-slideshow-3.jpg" class="d-block w-100" alt="3rd">
-                </div>
-            </div>
             </div>
         </div>  
-        <br><br>
+        
+        <div id="map" style="height: 40vh;"></div>
+        <br>
+
         <div class="content">
             <h3>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi illum voluptas quaerat temporibus odit veniam quas, eius aspernatur modi necessitatibus error? Ipsam delectus esse tempora doloribus laudantium ratione sequi dolore.
@@ -47,6 +53,10 @@
     
 <%- include('./partials/footer.ejs') %>
 
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    
     <script src="./js/script_home.js"></script>
 </body>
 </html>
