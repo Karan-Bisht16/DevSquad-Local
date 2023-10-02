@@ -1,0 +1,16 @@
+{
+  "name": "devsquad-local",
+  "version": "1.0.0",
+  "description": "testing version",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Karan_Bisht16",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2"
+  }
+}
