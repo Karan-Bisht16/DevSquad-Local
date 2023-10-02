@@ -9,7 +9,7 @@ showSignUpPassword.addEventListener('click', ()=>{
         userSignUpPassword.setAttribute('type', 'password')
     }, 1000);
 });
-showLoginPassword.addEventListener('click', ()=>{
+showLoginPassword.addEventListener('click', ()=>{ 
     userLoginPassword.setAttribute('type', 'text');
     setTimeout(()=>{
         userLoginPassword.setAttribute('type', 'password')
