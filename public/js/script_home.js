@@ -88,7 +88,11 @@ function success(position) {
     
     const nearbyNGOsArray = nearbyNGOs(lat, lng, 20);
     for (var i=0; i<20; i++) {
-        const NGOs = L.marker([nearbyNGOsArray[i]['latitude'], nearbyNGOsArray[i]['longitude']]).addTo(map);
+        const customIcon = L.icon({
+            iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Map_pin_icon_green.svg/800px-Map_pin_icon_green.svg.png',
+            iconSize: [20, 30]
+        })
+        const NGOs = L.marker([nearbyNGOsArray[i]['latitude'], nearbyNGOsArray[i]['longitude']], {icon: customIcon}).addTo(map);
         NGOs.bindPopup('NGO at ' + nearbyNGOsArray[i]['latitude'] + ', ' + nearbyNGOsArray[i]['longitude']);
     }
 }
