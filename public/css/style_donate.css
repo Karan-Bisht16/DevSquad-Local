@@ -72,26 +72,6 @@ textarea {
     position: relative;
     top: -23px;
 }
-.error {
-    animation: fadeInOut 1s forwards;
-    display: none;
-  }
-  
-  @keyframes fadeInOut {
-    0% {
-      opacity: 0;
-    }
-    10% {
-      opacity: 1;
-    }
-    90% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-      display: none;
-    }
-  }
 #submitBtn {
     width: 100%;
     border: none;

@@ -37,19 +37,24 @@ app.get('/donate', (req, res)=>{
         res.render("donate.ejs", {currentLocation: req.session.location});
     }
 });
+
 app.post('/donate/submit', (req, res)=>{
     const recievedData = req.body;
-    console.log(req.body);
     if (recievedData["name"]==='') {
-        res.send({error:'Please fill username'});  
+        res.send({error:'Please enter username'});  
     } else if (recievedData["dateOfDonation"]==='') {
-        res.send({error:'Please fill date of donation'});  
+        res.send({error:'Please enter date of donation'});  
+    } else if (new Date(recievedData['dateOfDonation'])<new Date()) {
+        res.send({error:'Please enter valid date of donation'})
     } else if (recievedData["mobileNumber"]==='') {
-        res.send({error:'Please fill mobile number'});  
+        res.send({error:'Please enter mobile number'});  
+    } else if (recievedData['mobileNumber'].length!==10) {
+        res.send({error:'Please enter valid mobile number'});
     } else if (recievedData["position"]==='' || recievedData["position"]["latitude"]==='') {
-        res.send({error:'Please fill pickup address'});  
+        res.send({error:'Please enter pickup address'});  
     } else {
         res.send({error:null});
+        console.log(req.body);
     }
 });
 app.get('/about_us', (req, res)=>{
@@ -61,7 +66,10 @@ app.get('/feedback', (req, res)=>{
 app.get('/sign_up', (req, res)=>{
     res.render("sign_up.ejs")
 });
-
+app.post('/sign_up',(req, res)=>{
+    console.log(req.body);
+    res.redirect('/');
+});
 app.listen(port, ()=>{
     console.log(`Server is starting on port ${port}.`);
-})
+});

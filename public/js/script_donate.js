@@ -71,16 +71,6 @@ addrTextArea.addEventListener('keyup',()=>{
     addrTextArea.required = true;
 });
 
-function checkDetails(event) {
-    const usernameInput = document.querySelector('#userName');
-    if (usernameInput.value===''){
-        usernameInput.setCustomValidity('Please fill out the username field.');
-        // event.preventDefault();
-    } else {
-            usernameInput.setCustomValidity('');  // Reset custom validity if valid
-    }
-}
-
 const submitBtn = document.querySelector("#submitBtn");
 submitBtn.addEventListener('click', async (event)=>{
     event.preventDefault;
@@ -102,7 +92,7 @@ submitBtn.addEventListener('click', async (event)=>{
     } else {
         Object.assign(formObject, {position: addrTextArea.value});
     }
-    console.log(formObject);
+
     try {
         const currentURL = window.location.href+'/submit';
         const response = await fetch(currentURL, {
@@ -114,9 +104,7 @@ submitBtn.addEventListener('click', async (event)=>{
         if (url["error"]){
             errorDiv.textContent = url["error"];
             errorDiv.classList.remove('hidden');
-            // errorDiv.classList.add('error');
             setTimeout(()=>{
-                // errorDiv.classList.remove('error')
                 errorDiv.classList.add('hidden');
             },1000);
         } else {

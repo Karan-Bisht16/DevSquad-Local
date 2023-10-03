@@ -11,23 +11,21 @@ $(document).ready(function() {
 });
 
 let lat=28.6139, lng=77.2090, marker, circle, zoomed;
-var map = L.map('map').setView([lat, lng], 13);
+var map = L.map('map').setView([lat, lng], 15);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
+    maxZoom: 16,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-const terrainLayer = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}{r}.{ext}', {
-    attribution: '&copy; <a href="https://stamen.com">Stamen Design</a> contributors',
-    subdomains: 'abcd',
-    minZoom: 0,
-    maxZoom: 18,
-    ext: 'png'
-});
-
 const streetsLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+
+const terrainLayer = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}{r}.{ext}', {
+    attribution: '&copy; <a href="https://stamen.com">Stamen Design</a> contributors',
+    maxZoom: 16,
+    ext: 'png'
 });
 
 const osmHOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
@@ -76,7 +74,7 @@ function success(position) {
     lat = position.coords.latitude;
     lng = position.coords.longitude;
     const acc = position.coords.accuracy;
-
+    
     if (marker) {
         map.removeLayer(marker);
         map.removeLayer(circle);
@@ -88,6 +86,11 @@ function success(position) {
         zoomed = map.fitBounds(circle.getBounds());
     }
     
+    const nearbyNGOsArray = nearbyNGOs(lat, lng, 20);
+    for (var i=0; i<20; i++) {
+        const NGOs = L.marker([nearbyNGOsArray[i]['latitude'], nearbyNGOsArray[i]['longitude']]).addTo(map);
+        NGOs.bindPopup('NGO at ' + nearbyNGOsArray[i]['latitude'] + ', ' + nearbyNGOsArray[i]['longitude']);
+    }
 }
 
 function error() {
@@ -96,4 +99,26 @@ function error() {
     } else {
         console.log("Cannot get current location");
     }
+}
+
+const originalPosBtn =  document.querySelector('#originalPosition');
+originalPosBtn.addEventListener('click', ()=>{
+    map.setView([lat, lng]);
+});
+
+function nearbyNGOs(latitude, longitude, numberOfLocations) {
+    const locations = [];
+    const variation = 0.02;
+  
+    for (let i = 0; i < numberOfLocations; i++) {
+        const latVariation = (Math.random() - 0.5) * 2 * variation;
+        const lonVariation = (Math.random() - 0.5) * 2 * variation;
+        
+        const randomLatitude = latitude + latVariation;
+        const randomLongitude = longitude + lonVariation;
+        
+        locations.push({ latitude: randomLatitude, longitude: randomLongitude });
+    }
+  
+    return locations;
 }

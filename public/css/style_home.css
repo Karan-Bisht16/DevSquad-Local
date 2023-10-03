@@ -7,6 +7,18 @@
     position: absolute;
     top: -40%;
 }
+.originalPositionBtn {
+    outline: none;
+    color: rgb(33, 37, 41);
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    position: relative;
+    top: -40px;
+    left: 10px;
+    padding: 2px 6px;
+    z-index: 800;
+}
 .content {
     width: 90%;
     margin: 0px auto 50px auto;
@@ -34,4 +46,5 @@
         padding: 10px 10px;
         border-radius: 8px;
     }
+
 }
