@@ -22,13 +22,39 @@ app.use(session({
 
 app.get('/', (req, res)=>{
     req.session.location = req.session.location || '';
-    res.render("home.ejs")
+    res.render("home.ejs");
 });
+
+function nearbyNGOs(latitude, longitude, numberOfLocations) {
+    const locations = [];
+    const variation = 0.02;
+  
+    for (let i = 0; i < numberOfLocations; i++) {
+        const latVariation = (Math.random() - 0.5) * 2 * variation;
+        const lonVariation = (Math.random() - 0.5) * 2 * variation;
+        
+        const randomLatitude = latitude + latVariation;
+        const randomLongitude = longitude + lonVariation;
+        
+        locations.push({ latitude: randomLatitude, longitude: randomLongitude });
+    }  
+    return locations;
+}
+
+let firstVisit = true;
 app.post('/', (req, res)=>{
     req.session.location = req.body["latitude"]+'_'+req.body["longitude"];
     console.log("[POST] `/`      Current User Location: "+req.session.location);
-    res.send({data: 'done'});
+    req.session.nearbyNGOs = req.session.nearbyNGOs || [];
+    if (firstVisit) {
+        req.session.nearbyNGOs = nearbyNGOs(req.body["latitude"], req.body["longitude"], 20); 
+        firstVisit = false;
+        res.send({data: req.session.nearbyNGOs});
+    } else {
+        res.send({data: req.session.nearbyNGOs});
+    }
 })
+
 app.get('/donate', (req, res)=>{
     console.log("[GET] `/donate` Current User Location: "+req.session.location);
     if (req.session.location===''){

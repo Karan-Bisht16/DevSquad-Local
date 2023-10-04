@@ -30,7 +30,8 @@ const terrainLayer = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terr
 
 const osmHOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
     maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'});
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
 
 const baseLayers = {
     'Streets': streetsLayer,
@@ -51,15 +52,41 @@ async function sendPostionToServer(object) {
             body: JSON.stringify(object)
         });
         const url = await response.json();
-        if (url["data"]==='done'){
-            return true;
-        } else {
+        if (url["data"].length>0) {
+            nearbyNGOsArray = url["data"];
+            const customIconNGO = L.icon({
+                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/9f/Green_LocationMarker.png',
+                iconSize: [30, 30]
+            })
+            const customIconToy = L.icon({
+                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/80/Red_LocationMarker.png',
+                iconSize: [30, 30]
+            })
+            const customIconBook = L.icon({
+                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/df/Amber_LocationMarker.png',
+                iconSize: [30, 30]
+            })
+    
+            for (var i=0; i<20; i++) {
+                customLat = parseFloat(nearbyNGOsArray[i]['latitude']).toFixed(5);
+                customLng = parseFloat(nearbyNGOsArray[i]['longitude']).toFixed(5);
+                if (i%3==0) {
+                    const NGOs = L.marker([customLat, customLng], {icon: customIconNGO}).addTo(map);
+                    NGOs.bindPopup('NGO at ' + customLat + ', ' + customLng);
+                } else if (i%3==1) {
+                    const Toys = L.marker([customLat, customLng], {icon: customIconToy}).addTo(map);
+                    Toys.bindPopup('Toy donation at ' + customLat + ', ' + customLng);
+                } else {
+                    const Books = L.marker([customLat, customLng], {icon: customIconBook}).addTo(map);
+                    Books.bindPopup('Book donation at ' + customLat + ', ' + customLng);
+                }
+            }
+        }
+        else {
             console.error("Server side error")
-            return false;
         }
     } catch (error) {
         console.error("Error in adding to server ",error);
-        return false;
     }
 }
 
@@ -69,7 +96,7 @@ function success(position) {
             latitude: position.coords.latitude, 
             longitude: position.coords.longitude
         };
-        sendPostionToServer(positionObj)
+        sendPostionToServer(positionObj);
     }
     lat = position.coords.latitude;
     lng = position.coords.longitude;
@@ -85,16 +112,6 @@ function success(position) {
     if (!zoomed) {
         zoomed = map.fitBounds(circle.getBounds());
     }
-    
-    const nearbyNGOsArray = nearbyNGOs(lat, lng, 20);
-    for (var i=0; i<20; i++) {
-        const customIcon = L.icon({
-            iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Map_pin_icon_green.svg/800px-Map_pin_icon_green.svg.png',
-            iconSize: [20, 30]
-        })
-        const NGOs = L.marker([nearbyNGOsArray[i]['latitude'], nearbyNGOsArray[i]['longitude']], {icon: customIcon}).addTo(map);
-        NGOs.bindPopup('NGO at ' + nearbyNGOsArray[i]['latitude'] + ', ' + nearbyNGOsArray[i]['longitude']);
-    }
 }
 
 function error() {
@@ -109,20 +126,3 @@ const originalPosBtn =  document.querySelector('#originalPosition');
 originalPosBtn.addEventListener('click', ()=>{
     map.setView([lat, lng]);
 });
-
-function nearbyNGOs(latitude, longitude, numberOfLocations) {
-    const locations = [];
-    const variation = 0.02;
-  
-    for (let i = 0; i < numberOfLocations; i++) {
-        const latVariation = (Math.random() - 0.5) * 2 * variation;
-        const lonVariation = (Math.random() - 0.5) * 2 * variation;
-        
-        const randomLatitude = latitude + latVariation;
-        const randomLongitude = longitude + lonVariation;
-        
-        locations.push({ latitude: randomLatitude, longitude: randomLongitude });
-    }
-  
-    return locations;
-}
