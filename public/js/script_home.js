@@ -81,8 +81,7 @@ async function sendPostionToServer(object) {
                     Books.bindPopup('Book donation at ' + customLat + ', ' + customLng);
                 }
             }
-        }
-        else {
+        } else {
             console.error("Server side error")
         }
     } catch (error) {

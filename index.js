@@ -20,8 +20,12 @@ app.use(session({
     saveUninitialized: true
 }));
 
+let firstVisit = true;
 app.get('/', (req, res)=>{
     req.session.location = req.session.location || '';
+    if (firstVisit) {
+        req.session.nearbyNGOs = [];
+    }
     res.render("home.ejs");
 });
 
@@ -41,11 +45,10 @@ function nearbyNGOs(latitude, longitude, numberOfLocations) {
     return locations;
 }
 
-let firstVisit = true;
 app.post('/', (req, res)=>{
     req.session.location = req.body["latitude"]+'_'+req.body["longitude"];
     console.log("[POST] `/`      Current User Location: "+req.session.location);
-    req.session.nearbyNGOs = req.session.nearbyNGOs || [];
+    req.session.nearbyNGOs = req.session.nearbyNGOs;
     if (firstVisit) {
         req.session.nearbyNGOs = nearbyNGOs(req.body["latitude"], req.body["longitude"], 20); 
         firstVisit = false;
