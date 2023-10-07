@@ -11,7 +11,7 @@ $(document).ready(function() {
 });
 
 let lat=28.6139, lng=77.2090, marker, circle, zoomed;
-var map = L.map('map').setView([lat, lng], 15);
+var map = L.map('map').setView([lat, lng], 13);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 16,
@@ -24,12 +24,12 @@ const streetsLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}
 
 const terrainLayer = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}{r}.{ext}', {
     attribution: '&copy; <a href="https://stamen.com">Stamen Design</a> contributors',
-    maxZoom: 16,
+    maxZoom: 14,
     ext: 'png'
 });
 
 const osmHOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-    maxZoom: 19,
+    maxZoom: 14,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 });
 
@@ -53,7 +53,7 @@ async function sendPostionToServer(object) {
         });
         const url = await response.json();
         if (url["data"].length>0) {
-            nearbyNGOsArray = url["data"];
+            let nearbyNGOsArray = url["data"];
             const customIconNGO = L.icon({
                 iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/9f/Green_LocationMarker.png',
                 iconSize: [30, 30]
@@ -68,8 +68,8 @@ async function sendPostionToServer(object) {
             })
     
             for (var i=0; i<20; i++) {
-                customLat = parseFloat(nearbyNGOsArray[i]['latitude']).toFixed(5);
-                customLng = parseFloat(nearbyNGOsArray[i]['longitude']).toFixed(5);
+                let customLat = parseFloat(nearbyNGOsArray[i]['latitude']).toFixed(5);
+                let customLng = parseFloat(nearbyNGOsArray[i]['longitude']).toFixed(5);
                 if (i%3==0) {
                     const NGOs = L.marker([customLat, customLng], {icon: customIconNGO}).addTo(map);
                     NGOs.bindPopup('NGO at ' + customLat + ', ' + customLng);
@@ -91,7 +91,7 @@ async function sendPostionToServer(object) {
 
 function success(position) {
     if (Math.abs(lat-position.coords.latitude) || Math.abs(lng-position.coords.longitude)){
-        positionObj = {
+        let positionObj = {
             latitude: position.coords.latitude, 
             longitude: position.coords.longitude
         };

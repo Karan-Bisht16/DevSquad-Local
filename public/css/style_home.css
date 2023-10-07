@@ -30,12 +30,16 @@
     padding: 10px 20px;
     border-radius: 20px;
     margin: 25px 0;
-    background-color: rgba(222, 29, 29, 0.921);
+    background-color: rgba(222, 29, 29, 0.9);
     border: 2px solid #da291c;
     transition: opacity 0.5s ease-in-out;
 }
 .title-card > p {
     font-size: 18px;
+}
+.source {
+    text-align: right;
+    font-size: 12px;
 }
 .fade-in {
     opacity: 1 !important;

@@ -7,7 +7,7 @@ i {
 }
 .tittle {
     text-align: center;
-    margin: 25px auto 0 auto;
+    margin: 15px auto 0 auto;
 }
 .container {
     justify-content: space-around;
@@ -18,20 +18,23 @@ i {
     justify-content: center;
 }
 .col {
-    max-width: 350px;
+    max-width: 320px;
     position: relative;
 }
 .card:hover {
     box-shadow: 0 15px 15px 15px rgba(115,193,255,0.3);
 }
 .card-body {
-    width: 200px;
-    height: 240px;
-    text-align: justify;
+    width: 170px;
+    height: 250px;
 }
 .card-title {
     color: #2196f3;
     margin: 0;
+}
+h6.card-title {
+    font-size: 12px;
+    color: #555;
 }
 .card-img-top {
     z-index: 100;

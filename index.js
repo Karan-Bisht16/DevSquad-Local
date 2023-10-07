@@ -20,18 +20,15 @@ app.use(session({
     saveUninitialized: true
 }));
 
-let firstVisit = true;
 app.get('/', (req, res)=>{
     req.session.location = req.session.location || '';
-    if (firstVisit) {
-        req.session.nearbyNGOs = [];
-    }
+    console.log("[GET]  `/`      Current User Location: "+req.session.location);
     res.render("home.ejs");
 });
 
 function nearbyNGOs(latitude, longitude, numberOfLocations) {
     const locations = [];
-    const variation = 0.02;
+    const variation = 0.0075; 
   
     for (let i = 0; i < numberOfLocations; i++) {
         const latVariation = (Math.random() - 0.5) * 2 * variation;
@@ -45,13 +42,14 @@ function nearbyNGOs(latitude, longitude, numberOfLocations) {
     return locations;
 }
 
+let firstVisitForPost = true;
 app.post('/', (req, res)=>{
     req.session.location = req.body["latitude"]+'_'+req.body["longitude"];
     console.log("[POST] `/`      Current User Location: "+req.session.location);
     req.session.nearbyNGOs = req.session.nearbyNGOs;
-    if (firstVisit) {
+    if (firstVisitForPost) {
         req.session.nearbyNGOs = nearbyNGOs(req.body["latitude"], req.body["longitude"], 20); 
-        firstVisit = false;
+        firstVisitForPost = false;
         res.send({data: req.session.nearbyNGOs});
     } else {
         res.send({data: req.session.nearbyNGOs});
